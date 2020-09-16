@@ -18,13 +18,17 @@ class UserAddressLogic
 
         $model = new UserAddressModel();
         $regionModel = new RegionModel();
+
         $where = array();
         $where[] = ['user_id', '=', $receive['user_id']];
-        $where[] = ['is_delete', '<>', 1];
-        $field = 'address_id,consignee,province,city,county,twon,address,mobile,is_default';
+        $data = array();
+        $data['where'] = $where;
 
-        $lists = $model->getList($where, $field, 'is_default desc,address_id desc');
-        foreach ($lists as $key=>$value){
+        $data['field'] = 'address_id,consignee,province,city,county,twon,address,mobile,is_default';
+
+        $lists = $model->getCommonLists($data);
+
+        foreach ($lists['data'] as $key=>$value){
             $list_id = array();
             array_push($list_id,$value['province'],$value['city'],$value['county'],$value['twon']);
             $list_id = implode(',',$list_id);
@@ -34,9 +38,9 @@ class UserAddressLogic
             $value['city_name'] = $region[$value['city']];
             $value['county_name'] = $region[$value['county']];
             $value['twon_name'] = $region[$value['twon']];
-            $lists[$key] = $value;
+            $lists['data'][$key] = $value;
         }
-        return JsonUtils::successful('操作成功', ['list'=>$lists]);
+        return JsonUtils::successful('操作成功',$lists);
     }
 
     /**

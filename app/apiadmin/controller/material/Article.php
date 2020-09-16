@@ -123,10 +123,11 @@ class Article extends Base
      * Date: 2020/8/8
      */
     public function type_list( ArticleTypeModel $ArticleTypeModel){
-        $where = array();
+        $data = $this->param;
 
-        $list = $ArticleTypeModel->getTypleList($where);
-        return JsonUtils::successful('获取成功',['list'=>$list]);
+        $data['field'] = 'id,name,status,img_url,sort';
+        $lists = $ArticleTypeModel->getCommonLists($data);
+        return JsonUtils::successful('获取成功',$lists);
     }
 
     /**
