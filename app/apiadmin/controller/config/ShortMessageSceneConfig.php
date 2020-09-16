@@ -21,10 +21,11 @@ class ShortMessageSceneConfig extends Base
      * */
     public function index(){
 
-        $ShortMessageSceneConfigModel =new ShortMessageSceneConfigModel();
-        $where = array();
-        $where[]  = ['is_delete','<>','1'];
-        $lists = $ShortMessageSceneConfigModel->getList($where,'id,name');
+        $model =new ShortMessageSceneConfigModel();
+        $data = $this->param;
+        $data['field'] = 'id,name';
+        $lists = $model->getCommonLists($data);
+
         return JsonUtils::successful('操作成功',$lists);
     }
 

@@ -40,9 +40,11 @@ class UserBank extends Api
 
         $where = array();
         $where[] = ['uid','=',$uid];
-        $where[] = ['is_delete','<>',1];
-        $field = 'id,name,card,issuing_bank,phone,idcard';
-        $lists = $this->model->getList($where,$field,'is_default desc,id desc');
+        $data['where'] = $where;
+        $data['field'] = 'id,name,card,issuing_bank,phone,idcard';
+
+        $lists = $this->model->getCommonLists($data);
+
         return JsonUtils::successful('操作成功',$lists);
     }
 

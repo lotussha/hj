@@ -54,10 +54,9 @@ class UserWallet extends Api
         $data['field'] = 'id,uid,order_sn,money,give_money,total_money,status,type,create_time,original_money,now_money';
         $list = (new UserRechargeLogModel())->getAllRecharge($data);
         $user_use_money = (new UserDetailsModel())->getValues(['uid'=>$data['uid']],'use_money');
-        $data = array();
-        $data['list'] = $list;
-        $data['user_use_money'] = $user_use_money;
-        return JsonUtils::successful('操作成功',$data);
+
+        $list['user_use_money'] = $user_use_money;
+        return JsonUtils::successful('操作成功',$list);
     }
 
 
@@ -76,10 +75,9 @@ class UserWallet extends Api
         $data['uid'] = $this->api_user['id'];
         $list = (new UserIntegralLogModel())->getAllIntegral($data);
         $user_use_integral = (new UserDetailsModel())->getValues(['uid'=>$data['uid']],'use_integral');
-        $data = array();
-        $data['list'] = $list;
-        $data['user_use_integral'] = $user_use_integral;
-        return JsonUtils::successful('操作成功',$data);
+
+        $list['user_use_integral'] = $user_use_integral;
+        return JsonUtils::successful('操作成功',$list);
     }
 
     /**
@@ -109,11 +107,10 @@ class UserWallet extends Api
         $data['uid'] = $this->api_user['id'];
         $list = (new UserCommissionLogModel())->getAllCommission($data);
         $user_commission = (new UserDetailsModel())->findInfo(['uid'=>$data['uid']],'commission_use_money,commission_frozen_money');
-        $data = array();
-        $data['list'] = $list;
-        $data['commission_use_money'] = $user_commission['commission_use_money'];
-        $data['commission_frozen_money'] = $user_commission['commission_frozen_money'];
-        return JsonUtils::successful('操作成功',$data);
+
+        $list['commission_use_money'] = $user_commission['commission_use_money'];
+        $list['commission_frozen_money'] = $user_commission['commission_frozen_money'];
+        return JsonUtils::successful('操作成功',$list);
     }
 
     /**
@@ -138,11 +135,9 @@ class UserWallet extends Api
             $money = $cash_money['money'];
         }
 
-        $data = array();
-        $data['list'] = $list;
-        $data['user_use_money'] = $user_use_money;
-        $data['cash_money'] = $money;
-        return JsonUtils::successful('操作成功',$data);
+        $list['user_use_money'] = $user_use_money;
+        $list['cash_money'] = $money;
+        return JsonUtils::successful('操作成功',$list);
     }
 
 

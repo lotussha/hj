@@ -527,7 +527,7 @@ class CommonModel extends Model
      * Date: 2020.09.16
      */
     public function getCommonLists($receive){
-        $receive['list_rows'] = isset($receive['list_rows']) ? $receive['list_rows'] : 10;  //多少条
+        $receive['list_rows'] = isset($receive['list_rows']) ? $receive['list_rows'] : 20;  //多少条
         $receive['field'] = isset($receive['field']) ? $receive['field'] : true;//指定字段
         $receive['where'] = isset($receive['where']) ? $receive['where'] : '';//指定字段
 
