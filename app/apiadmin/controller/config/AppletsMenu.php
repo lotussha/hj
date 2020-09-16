@@ -20,10 +20,10 @@ class AppletsMenu extends Base
      * @author hao    2020.08.18
      * */
     public function index(){
+        $data = $this->param;
         $model =new AppletsMenuModel();
-        $where = array();
-        $where[]  = ['is_delete','<>','1'];
-        $lists = $model->getList($where,'id,name,img_url,status');
+        $data['field'] = 'id,name,img_url,status';
+        $lists = $model->getCommonLists($data);
         return JsonUtils::successful('操作成功',$lists);
     }
 

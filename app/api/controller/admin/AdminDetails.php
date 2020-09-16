@@ -24,7 +24,7 @@ class AdminDetails extends ApiAdmin
     public function shop_center(){
         $data = $this->param;
         $data['aid'] = $this->admin_id;
-//        echo 1;
+
         $logic = new AdminDetailsLogic();
         $res = $logic->shop_center($data);
         return $res;

@@ -22,9 +22,9 @@ class RechargeOption extends Base
      * */
     public function index(){
         $model =new RechargeOptionModel();
-        $where = array();
-        $where[]  = ['is_delete','<>','1'];
-        $lists = $model->getList($where,'id,min_money,max_money,give,status');
+        $data = $this->param;
+        $data['field'] = 'id,min_money,max_money,give,status';
+        $lists = $model->getCommonLists($data);
         return JsonUtils::successful('操作成功',$lists);
     }
 

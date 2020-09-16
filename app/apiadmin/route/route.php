@@ -29,7 +29,7 @@ Route::group('',function () {
 });
 
 // 营销管理 - 秒杀模块
-//Route::group('',function () {
+//Route::group('',functAppletsMenuion () {
 //    // 秒杀时间段配置
 //    Route::rule('seckill_config/add','seckill.SeckillConfig/add','POST'); // 新增秒杀配置 - sakuno
 //    Route::rule('seckill_config/edit','seckill.SeckillConfig/edit'); // 查看 or 编辑 秒杀配置 - sakuno

@@ -21,18 +21,12 @@ class ShortMessageModelConfig extends Base
      * */
     public function index(Request $request){
         //获取数据
-        list($page,$list_row) = UtilService::postMore([
-            ['page', '1'],
-            ['list_row', '10'],
-        ], $request, true);
+
+        $data = $this->param;
+        $data['field'] = 'id,scene_id,autograph,message_content';
         $ShortMessageModelConfigModel =new ShortMessageModelConfigModel();
-        $where = array();
-        $field = 'id,scene_id,autograph,message_content';
-        $list = $ShortMessageModelConfigModel->getAllConfig($page,$list_row,$where,$field);
-        $total = $ShortMessageModelConfigModel->statInfo($where);
-        $page_total = ceil($total/$list_row);
-        $res = ['total'=>$total,'page'=>$page,'page_total'=>$page_total,'list'=>$list];
-        return JsonUtils::successful('操作成功',$res);
+        $list = $ShortMessageModelConfigModel->getAllConfig($data);
+        return JsonUtils::successful('操作成功',$list);
     }
 
     /**
