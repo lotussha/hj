@@ -17,7 +17,8 @@ class ShortMessageModelConfigModel extends CommonModel
      * Date: 2020-08-10
      * @return \think\model\relation\hasOne
      */
-    public function sceneConfig(){
+    public function sceneConfig()
+    {
         return $this->hasOne('app\common\model\config\ShortMessageSceneConfigModel', 'id', 'scene_id')->field('id,name');
     }
 
@@ -30,19 +31,24 @@ class ShortMessageModelConfigModel extends CommonModel
      * User: hao
      * Date: 2020/8/10
      */
-    public function getAllConfig($page=1,$list_row=10,$where=[],$field=true, $order = 'id desc'){
-        $data = $this->with(['sceneConfig'])
-            ->field($field)
-            ->where($where)
-            ->where('is_delete','<>','1')
-            ->page($page,$list_row)
-            ->order($order)
-            ->select();
+//    public function getAllConfig($page=1,$list_row=10,$where=[],$field=true, $order = 'id desc'){
+    public function getAllConfig($receive)
+    {
 
-        foreach ($data as $k=>$v){
+        $receive['list_rows'] = isset($receive['list_rows']) ? $receive['list_rows'] : 10;  //多少条
+        $receive['field'] = isset($receive['field']) ? $receive['field'] : true;//指定字段
+        $receive['where'] = isset($receive['where']) ? $receive['where'] : '';//指定字段
+
+        $data = $this->with(['sceneConfig'])
+            ->field($receive['field'])
+            ->where($receive['where'])
+            ->where('is_delete', '=', '0')
+            ->scope('where', $receive)
+            ->paginate($receive['list_rows']);
+        foreach ($data as $k => $v) {
             $data[$k]['scene_name'] = $v->sceneConfig['name'];
         }
-        return arrString($data->toArray());
+        return $data->toArray();
     }
 
 
@@ -55,18 +61,19 @@ class ShortMessageModelConfigModel extends CommonModel
      * User: hao
      * Date: 2020/8/5
      */
-    public function getInfoConfig($where=[],$field='*'){
-        $data = $this->with(['sceneConfig'=>function($query) {
+    public function getInfoConfig($where = [], $field = '*')
+    {
+        $data = $this->with(['sceneConfig' => function ($query) {
             $query->field('name');
         }])
             ->field($field)
             ->where($where)
             ->find();
 
-        if ($data){
+        if ($data) {
             $data['scene_name'] = $data->sceneConfig['name'];
             $data = $data->toArray();
-        }else{
+        } else {
             $data = array();
         }
         return $data;

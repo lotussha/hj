@@ -519,6 +519,26 @@ class CommonModel extends Model
         $return_data = $this->insertGetId($data, $is_return_pk);
         return $return_data;
     }
+
+    /**
+     * 获取列表
+     * @return array
+     * User: hao
+     * Date: 2020.09.16
+     */
+    public function getCommonLists($receive){
+        $receive['list_rows'] = isset($receive['list_rows']) ? $receive['list_rows'] : 10;  //多少条
+        $receive['field'] = isset($receive['field']) ? $receive['field'] : true;//指定字段
+        $receive['where'] = isset($receive['where']) ? $receive['where'] : '';//指定字段
+
+        $data = $this
+            ->field($receive['field'])
+            ->where($receive['where'])
+            ->where('is_delete','=',0)
+            ->scope('where', $receive)
+            ->paginate($receive['list_rows']);
+        return $data->toArray();
+    }
     /*************************************hao*************************************************/
 
 }
