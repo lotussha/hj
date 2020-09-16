@@ -63,9 +63,9 @@ class GoodsLogic
             ->append(['prom_type_text'])
 //            ->cache(true)
 //            ->page($page, $limitpage)
-            ->paginate($limitpage)
             ->order($order)
-            ->select()->toArray();
+            ->paginate($limitpage)->toArray();
+//            ->select()->toArray();
 //        dump($this->goodsModel->getLastSql());die;
        return $lists;
     }
