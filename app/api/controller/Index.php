@@ -58,7 +58,6 @@ class Index extends Api
         $rec_field = 'goods_id,original_img,goods_name,market_price,shop_price,is_recommend,prom_type';
         $rec_where = ['page'=>1,'limitpage'=>4,'field'=>$rec_field,'where'=>[['identity','=',1],['is_recommend','=',1],['prom_type','=',0]]];
         $rec_goods_lists = $this->goodsLogic->getGoodsList($rec_where);
-
         //秒杀专区
         $s_where = ['limit'=>3,'is_recommend'=>1,'page'=>1,'limitpage'=>3];
         $seckill_goods_lists = $this->goodsLogic->getSeckillLists($s_where);
@@ -95,7 +94,7 @@ class Index extends Api
             'rec_cat_lists'=>$rec_cat_lists,
             'activity_lists'=>$activity_lists,
             'radio_lists'=>$radio_lists,
-            'rec_goods_lists'=>$rec_goods_lists,
+            'rec_goods_lists'=>$rec_goods_lists['data'],
             'seckill_goods_lists'=>$seckill_goods_lists,
             'group_goods_lists'=>$group_goods_lists,
             'shop_goods_lists'=>$shop_goods_lists,

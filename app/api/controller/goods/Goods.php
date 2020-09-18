@@ -112,8 +112,9 @@ class Goods extends Api
             'filter_spec'=>$filter_spec,
             'filter_attr'=>$filter_attr,
         ];
-        $data = ['screen_lists'=>$screen_lists,'lists'=>$lists];
-        return JsonUtils::successful('获取成功',$data);
+        $lists['screen_lists'] = $screen_lists;
+//        $data = ['screen_lists'=>$screen_lists];
+        return JsonUtils::successful('获取成功',$lists);
     }
 
     /**

@@ -62,9 +62,10 @@ class GoodsLogic
             ->scope('where', $param)
             ->append(['prom_type_text'])
 //            ->cache(true)
-            ->page($page, $limitpage)
+//            ->page($page, $limitpage)
             ->order($order)
-            ->select()->toArray();
+            ->paginate($limitpage)->toArray();
+//            ->select()->toArray();
 //        dump($this->goodsModel->getLastSql());die;
        return $lists;
     }
@@ -90,6 +91,7 @@ class GoodsLogic
         $param['field'] = 'goods_id,original_img,goods_name,market_price,shop_price,store_count,is_recommend,sort,prom_type,prom_id';
         $param['where'] = [['prom_type','=',2],['prom_id','in',$prom_id]];
         $res = $this->getGoodsList($param);
+        $res = $res['data'];
         if (!empty($res)){
             foreach ($res as $k=>$v){
                 $activity = Db::name('activity')->field('100*(FORMAT(buy_num/goods_num,2)) as percent')->where(['id'=>$v['prom_id']])->find();
