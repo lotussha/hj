@@ -466,6 +466,7 @@ class OrderLogic
         $type = $param['type'] ?? 1;
         $orderModel = new OrderModel();
         $paramWhere = $param['where'] ?? [];
+        $limitpage = isset($param['limitpage']) && !empty($param['limitpage']) ? $param['limitpage'] : 10;
         $field = 'id,parent_id,identity_id,order_sn,order_status,shipping_status,shipping_price,pay_status,comment_status,order_amount,actual_amount,add_time,prom_types,goods_num,confirm_time';
         $order = 'add_time desc';
         switch ($type) {
@@ -495,9 +496,8 @@ class OrderLogic
             ->append(['status_text', 'add_time_data'])
             ->hidden(['add_time','comment_status','shipping_status','order_status','identity_id'])
             ->order($order)
-            ->select()->toArray();
-        $data['lists'] = $lists;
-        return $data;
+            ->paginate($limitpage)->toArray();
+        return $lists;
     }
 
     /**
