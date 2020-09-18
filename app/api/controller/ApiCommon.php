@@ -38,7 +38,7 @@ class ApiCommon extends Api
         $level = $this->param['level'] ?? 0;
         $id = $this->param['id'] ?? 0;
         $data = (new RegionModel())->getLevelRegion($level,$id)->toArray();
-        return JsonUtils::successful('获取成功',arrString($data));
+        return JsonUtils::successful('获取成功',['data'=>arrString($data)]);
     }
     /**
      * file文件上传
