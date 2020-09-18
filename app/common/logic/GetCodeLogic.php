@@ -92,6 +92,7 @@ class GetCodeLogic
         }
 
         $sendRes = $this->sendCodes($phone, $content_str); //发送短信
+        dump($sendRes);exit;
         if ($sendRes['code'] === false) {
             Db::rollback();
 //            return JsonUtils::fail('系统繁忙，发送短信异常，请联系管理员！');
@@ -106,14 +107,22 @@ class GetCodeLogic
     //发送短信
     public function sendCodes($phone, $content)
     {
+        $this->aliyunSms();
         $list = (new ShortMessageInterfaceConfigModel())->where(['stutas'=>1,'delete_time'=>0])->field('id,appkey,secretkey')->find();
         if (!$list){
             return ['code' => false, 'msg' => '没有发送短信接口'];
         }
         switch ($list['id']){
             case 1:
+
                 break;
         }
         return ['code' => true, 'msg' => ''];
+    }
+
+
+    //阿里云
+    public function aliyunSms(){
+        echo 1;
     }
 }
