@@ -1,14 +1,15 @@
 <?php
 
-
 namespace app\common\logic;
 
 //获取验证码
+use Aliyun\Alisms;
 use app\common\model\config\CodeGainModel;
 use app\common\model\config\ShortMessageInterfaceConfigModel;
 use app\common\model\config\ShortMessageModelConfigModel;
 use sakuno\utils\JsonUtils;
 use think\facade\Db;
+use Aliyun\Sms;
 
 class GetCodeLogic
 {
@@ -110,7 +111,7 @@ class GetCodeLogic
         $this->aliyunSms();
         $list = (new ShortMessageInterfaceConfigModel())->where(['stutas'=>1,'delete_time'=>0])->field('id,appkey,secretkey')->find();
         if (!$list){
-            return ['code' => false, 'msg' => '没有发送短信接口'];
+//            return ['code' => false, 'msg' => '没有发送短信接口'];
         }
         switch ($list['id']){
             case 1:
@@ -123,6 +124,21 @@ class GetCodeLogic
 
     //阿里云
     public function aliyunSms(){
-        echo 1;
+//        $sms = new Sms();
+//        $msg = $sms->sendSms('15818130380');
+//        dump($msg);
+
+        $sms = new Alisms(['key'=>'LTAI4FhmafFhmyWZcipMRiqU','sign'=>'春风二里','secret'=>'0aShtwoFEdwYtt5F4Tyb1txrhEIpXt']);
+        $sms->mobile('15818130380');
+        $sms->template('SMS_186946117');
+        $sms->param(array(  // 短信模板中字段的值
+            "code"=>"12345",
+            "product"=>"dsd"
+        ));
+        $msg = $sms->send();
+        dump($msg);
+        exit;
+
+
     }
 }
