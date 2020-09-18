@@ -33,8 +33,7 @@ class Goods extends Base
         $page = isset($this->param['page']) ? $this->param['page'] : 1;
         $list_rows = $this->param['list_rows'] ?? $this->admin['list_rows'];
         $lists = $goodsLogic->getGoodsList($page,$list_rows,$this->param);
-        $data = ['lists'=>$lists];
-        return JsonUtils::successful('获取成功',$data);
+        return JsonUtils::successful('获取成功',$lists);
     }
 
     /**
