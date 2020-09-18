@@ -556,25 +556,20 @@ class UserDetailsLogic
         if ($res) {
             $is = 1;
         }
+
         $list_sign = (new UserSignModel())->getColumn(['year' => $year, 'month' => $month, 'uid' => $uid], 'day');
 
-        $month_arr = range(1, $month_num);
 
         $arr = array();
-        foreach ($month_arr as $key => $value) {
-            foreach ($list_sign as $k => $v) {
-                if ($value == $v) {
-                    $arr[$value] = 1;
-                    break;
-                } else {
-                    $arr[$value] = 0;
-                }
-            }
+        foreach ($list_sign as $key => $value) {
+         $arr[$key]['date'] = $year.'-'.$month.'-'.$value;
+         $arr[$key]['info'] = '已打卡';
+
         }
 
         $data = array();
         $data['is'] = $is;
-        $data['list'] = $arr;
+        $data['data'] = $arr;
         return JsonUtils::successful('操作成功', $data);
 
     }
