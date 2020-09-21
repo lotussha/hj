@@ -79,14 +79,14 @@ class Api extends Collection
         if (!in_array($this->url, $this->authExcept) && true == $this->needAuth){
             //缺少token
             if (is_null($this->token) || empty($this->token)) {
-                echo json_encode(['status'=>'0','code'=>"10002",'msg'=>'请先登录']);die;
+                echo json_encode(['status'=>'0','code'=>"20001",'msg'=>'请先登录']);die;
             }
 
             //验证是否登录
             $checkToken = apiCheckToken($this->token);
 
             if($checkToken['status'] == 0){
-                echo json_encode(['status'=>'0','code'=>"10000",'msg'=>$checkToken['msg']]);die;
+                echo json_encode(['status'=>'0','code'=>$checkToken['code'],'msg'=>$checkToken['msg']]);die;
             }
             $this->user_id = $checkToken['data']->api_id;
             //用户信息

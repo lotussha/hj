@@ -38,6 +38,8 @@ define('USER_ACCOUNT_FORBIDDEN',20003); // 账号已被禁用
 define('USER_NOT_EXIST',20004); // 用户不存在
 define('USER_HAS_EXISTED',20005); // 用户已存在
 define('USER_NOT_BINGING',20006); // 用户未绑定
+define('USER_TOKEN_TIMEOUT',20007); // 授权已过期
+define('TOKEN_ERROR', 20008); // 签名错误
 
 /* 业务错误：30001-39999 */
 define('SPECIFIED_QUESTIONED_USER_NOT_EXIST',30001); //业务错误

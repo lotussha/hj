@@ -541,17 +541,22 @@ if (!function_exists('apiCheckToken')) {
             $arr = (array)$decoded;
             $res['status'] = 1;
             $res['data'] = $arr['data'];
+            $res['code'] = 10000;
             return $res;
         } catch (\Firebase\JWT\SignatureInvalidException $e) { //签名不正确
+            $status['code'] = '20008';
             $status['msg'] = "签名不正确";
             return $status;
         } catch (\Firebase\JWT\BeforeValidException $e) { // 签名在某个时间点之后才能用
+            $status['code'] = '20007';
             $status['msg'] = "token失效";
             return $status;
         } catch (\Firebase\JWT\ExpiredException $e) { // token过期
+            $status['code'] = '20007';
             $status['msg'] = "token失效";
             return $status;
         } catch (Exception $e) { //其他错误
+            $status['code'] = '00000';
             $status['msg'] = "未知错误";
             return $status;
         }
