@@ -74,12 +74,12 @@ class ApiAdmin extends Collection
         if (!in_array($this->url, $this->authExcept) && true == $this->needAuth) {
             //缺少token
             if (is_null($this->token) || empty($this->token)) {
-                echo json_encode(['status'=>'0','code'=>"10002",'msg'=>'请先登录']);die;
+                echo json_encode(['status'=>'0','code'=>"20001",'msg'=>'请先登录']);die;
             }
 
             $checkToken = checkToken($this->token);
             if($checkToken['status'] == 0){
-                echo json_encode(['status'=>'0','code'=>"10000",'msg'=>$checkToken['msg']]);die;
+                echo json_encode(['status'=>'0','code'=>$checkToken['code'],'msg'=>$checkToken['msg']]);die;
             }
             //用户信息
             $this->admin_id = $checkToken['data']->admin_id;
